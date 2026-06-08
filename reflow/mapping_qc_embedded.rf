@@ -1,0 +1,61 @@
+val image = "localhost:5000/bio-hw3-data:docker-v2"
+
+val Main = exec(image := image, cpu := 4, mem := 7*GiB, disk := 30*GiB) (report file) {"
+    set -euo pipefail
+
+    mkdir -p qc alignment flagstat variants ref
+
+    cp /work/data/ref/ecoli.fa ref/ecoli.fa
+
+    fastqc \
+      /work/data/raw/SRR826444_1.fastq.gz \
+      /work/data/raw/SRR826444_2.fastq.gz \
+      -o qc
+
+    bwa index ref/ecoli.fa
+    samtools faidx ref/ecoli.fa
+
+    bwa mem -t 4 \
+      ref/ecoli.fa \
+      /work/data/raw/SRR826444_1.fastq.gz \
+      /work/data/raw/SRR826444_2.fastq.gz \
+      | samtools view -@ 4 -bS - \
+      > alignment/SRR826444.bam
+
+    samtools flagstat alignment/SRR826444.bam > flagstat/SRR826444.flagstat.txt
+
+    MAPPED_PERCENT=$(grep ' mapped (' flagstat/SRR826444.flagstat.txt | head -n 1 | cut -d '(' -f 2 | cut -d '%' -f 1)
+
+    echo Sample: SRR826444 > {{report}}
+    echo Mapped percent: ${MAPPED_PERCENT} >> {{report}}
+
+    if awk -v p=${MAPPED_PERCENT} 'BEGIN {exit !(p > 90)}'; then
+        echo Status: OK >> {{report}}
+
+        samtools sort -@ 4 \
+          -o alignment/SRR826444.sorted.bam \
+          alignment/SRR826444.bam
+
+        samtools index alignment/SRR826444.sorted.bam
+
+        freebayes \
+          -f ref/ecoli.fa \
+          alignment/SRR826444.sorted.bam \
+          > variants/SRR826444.vcf
+
+        VARIANT_COUNT=$(grep -vc '^#' variants/SRR826444.vcf || true)
+
+        echo Variant count: ${VARIANT_COUNT} >> {{report}}
+        echo Finished: yes >> {{report}}
+    else
+        echo Status: not OK >> {{report}}
+        echo Finished: no >> {{report}}
+    fi
+
+    echo --- samtools flagstat --- >> {{report}}
+    cat flagstat/SRR826444.flagstat.txt >> {{report}}
+
+    echo RE_FLOW_RESULT_START
+    cat {{report}}
+    echo RE_FLOW_RESULT_END
+"}

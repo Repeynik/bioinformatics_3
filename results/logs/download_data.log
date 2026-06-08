@@ -1,0 +1,5 @@
+[1/4] Download paired-end FASTQ from ENA
+[2/4] Check FASTQ files
+-rw-r--r-- 1 root root 12M Jun  8 14:59 data/raw/SRR826444_1.fastq.gz
+-rw-r--r-- 1 root root 14M Jun  8 14:59 data/raw/SRR826444_2.fastq.gz
+[3/4] Download E. coli reference genome

@@ -1,0 +1,79 @@
+param (
+    ref string
+    r1 string
+    r2 string
+)
+
+val image = "localhost:5000/bio-hw3:docker-v2"
+
+func fastqcStep(r1, r2 file) =
+    exec(image, cpu := 2, mem := 2*GiB, disk := 5*GiB) (out dir) {"
+        set -euo pipefail
+        mkdir -p {{out}}
+        fastqc {{r1}} {{r2}} -o {{out}}
+    "}
+
+func indexReference(ref file) =
+    exec(image, cpu := 2, mem := 4*GiB, disk := 10*GiB) (out dir) {"
+        set -euo pipefail
+        mkdir -p {{out}}
+        cp {{ref}} {{out}}/ref.fa
+        bwa index {{out}}/ref.fa
+        samtools faidx {{out}}/ref.fa
+    "}
+
+func mappingQc(refdir dir, r1, r2 file) =
+    exec(image, cpu := 4, mem := 8*GiB, disk := 30*GiB) (report file) {"
+        set -euo pipefail
+
+        bwa mem -t 4 {{refdir}}/ref.fa {{r1}} {{r2}} \
+          | samtools view -@ 4 -bS - \
+          > sample.bam
+
+        samtools flagstat sample.bam > flagstat.txt
+
+        MAPPED_PERCENT=$(awk '/^[0-9]+ \\+ [0-9]+ mapped \\(/ {
+            line = $0
+            sub(/^.*\\(/, \"\", line)
+            sub(/%.*$/, \"\", line)
+            print line
+            exit
+        }' flagstat.txt)
+
+        echo \"Sample: SRR826444\" > {{report}}
+        echo \"Mapped percent: ${MAPPED_PERCENT}\" >> {{report}}
+
+        if awk \"BEGIN {exit !(\"$MAPPED_PERCENT\" > 90)}\"; then
+            echo \"Status: OK\" >> {{report}}
+
+            samtools sort -@ 4 -o sample.sorted.bam sample.bam
+            samtools index sample.sorted.bam
+
+            freebayes -f {{refdir}}/ref.fa sample.sorted.bam > sample.vcf
+
+            VARIANT_COUNT=$(grep -vc '^#' sample.vcf || true)
+
+            echo \"Variant count: ${VARIANT_COUNT}\" >> {{report}}
+            echo \"Finished: yes\" >> {{report}}
+        else
+            echo \"Status: not OK\" >> {{report}}
+            echo \"Finished: no\" >> {{report}}
+        fi
+
+        echo \"\" >> {{report}}
+        echo \"--- samtools flagstat ---\" >> {{report}}
+        cat flagstat.txt >> {{report}}
+    "}
+
+@requires(cpu := 4, mem := 8*GiB, disk := 30*GiB)
+val Main = {
+    refFile := file(ref)
+    read1 := file(r1)
+    read2 := file(r2)
+
+    qc := fastqcStep(read1, read2)
+    refIndex := indexReference(refFile)
+    report := mappingQc(refIndex, read1, read2)
+
+    qc ~> report
+}

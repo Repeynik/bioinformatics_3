@@ -1,0 +1,7 @@
+FROM bio-hw3:latest
+
+WORKDIR /work
+
+COPY data/raw/SRR826444_1.fastq.gz /work/data/raw/SRR826444_1.fastq.gz
+COPY data/raw/SRR826444_2.fastq.gz /work/data/raw/SRR826444_2.fastq.gz
+COPY data/ref/ecoli.fa /work/data/ref/ecoli.fa

@@ -1,0 +1,16 @@
+Reflow был собран из исходных кодов и запущен в локальном Docker-режиме на виртуальной машине Timeweb Cloud.
+
+Был поднят локальный Docker registry. Для обхода несовместимости старого Reflow image resolver с OCI manifest format был добавлен bypass для localhost:5000.
+
+Hello World workflow был успешно выполнен через Reflow local mode.
+
+Основной embedded workflow reflow/mapping_qc_embedded.rf также был успешно выполнен через Reflow local mode. В workflow использовался Docker image localhost:5000/bio-hw3-data:docker-v2, внутрь которого были помещены FASTQ-файлы SRR826444 и референсный геном E. coli.
+
+В логе Reflow зафиксированы:
+- отправка задачи в scheduler;
+- запуск Docker exec;
+- завершение exec;
+- состояние task done;
+- итоговый статус mapping_qc_embedded.Main ok.
+
+Оставшееся ограничение: после успешного завершения задачи Reflow CLI завершился с ошибкой runtime error: invalid memory address or nil pointer dereference. Ошибка возникает после выполнения Docker-задачи, на этапе финальной обработки результата CLI.

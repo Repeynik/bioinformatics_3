@@ -1,0 +1,29 @@
+# Raw sequencing data
+data/raw/*.fastq
+data/raw/*.fastq.gz
+data/raw/*.fq
+data/raw/*.fq.gz
+
+# Reference genome and indexes
+data/ref/*.fa
+data/ref/*.fna
+data/ref/*.gz
+data/ref/*.amb
+data/ref/*.ann
+data/ref/*.bwt
+data/ref/*.pac
+data/ref/*.sa
+data/ref/*.fai
+
+# Large alignment files
+results/alignment/*.sam
+results/alignment/*.bam
+results/alignment/*.bai
+
+# FastQC archives
+results/qc/*.zip
+
+# Runtime/cache
+.reflow/
+*.tmp
+*.cache

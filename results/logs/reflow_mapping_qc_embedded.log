@@ -1,0 +1,115 @@
+2026/06/08 17:33:37 reflow version localcluster-localregistry-bypass (go1.22.2)
+2026/06/08 17:33:37 bootstrap binary: https://grail-public-bin.s3-us-west-2.amazonaws.com/linux/amd64/reflowbootstrap0.4
+2026/06/08 17:33:38 executor: no state on disk
+2026/06/08 17:33:38 reflow runtime: ===== started =====
+2026/06/08 17:33:38 scheduler: starting with configuration: transferer *repository.Manager cluster *localcluster.Cluster taskDB testutil.nopTaskDB blob.Mux[s3]
+2026/06/08 17:33:38 reflow version: localcluster-localregistry-bypass (go1.22.2)
+2026/06/08 17:33:38 run ID: b3741cab
+2026/06/08 17:33:38 evaluating program /root/hw3-variant-calling/reflow/mapping_qc_embedded.rf
+	(no params)
+	(no arguments)
+2026/06/08 17:33:38 Trace: none (since nopTracer is in use)
+2026/06/08 17:33:38 evaluating with configuration: scheduler *sched.Scheduler snapshotter blob.Mux repository *noprepo.Repository,url=nop: assoc &{{%!s(int32=0) %!s(uint32=0)} map[] %!s(func() time.Time=<nil>) %!s(func() []string=<nil>)} flags nocache,norecomputeempty,topdown flowconfig hashv2 cachelookuptimeout 20m0s imagemap map[localhost:5000/bio-hw3-data:docker-v2:localhost:5000/bio-hw3-data:docker-v2] dotwriter(*os.File)
+2026/06/08 17:33:38 pending: tasks 1 (yet to submit), lookup 0, running 0
+2026/06/08 17:33:38 created bundle sha256:de9470d69f1c22081b24eb9f6b6d317c1bde5721291dc7e350a67b9b17917073 with args: []
+2026/06/08 17:33:38 scheduler: task (flow b3a27900) submitted with execconfig exec image localhost:5000/bio-hw3-data:docker-v2 cmd "\n    set -euo pipefail\n\n    mkdir -p qc alignment flagstat variants ref\n\n    cp /work/data/ref/ecoli.fa ref/ecoli.fa\n\n    fastqc \\\n      /work/data/raw/SRR826444_1.fastq.gz \\\n      /work/data/raw/SRR826444_2.fastq.gz \\\n      -o qc\n\n    bwa index ref/ecoli.fa\n    samtools faidx ref/ecoli.fa\n\n    bwa mem -t 4 \\\n      ref/ecoli.fa \\\n      /work/data/raw/SRR826444_1.fastq.gz \\\n      /work/data/raw/SRR826444_2.fastq.gz \\\n      | samtools view -@ 4 -bS - \\\n      > alignment/SRR826444.bam\n\n    samtools flagstat alignment/SRR826444.bam > flagstat/SRR826444.flagstat.txt\n\n    MAPPED_PERCENT=$(grep ' mapped (' flagstat/SRR826444.flagstat.txt | head -n 1 | cut -d '(' -f 2 | cut -d '%%' -f 1)\n\n    echo Sample: SRR826444 > %s\n    echo Mapped percent: ${MAPPED_PERCENT} >> %s\n\n    if awk -v p=${MAPPED_PERCENT} 'BEGIN {exit !(p > 90)}'; then\n        echo Status: OK >> %s\n\n        samtools sort -@ 4 \\\n          -o alignment/SRR826444.sorted.bam \\\n          alignment/SRR826444.bam\n\n        samtools index alignment/SRR826444.sorted.bam\n\n        freebayes \\\n          -f ref/ecoli.fa \\\n          alignment/SRR826444.sorted.bam \\\n          > variants/SRR826444.vcf\n\n        VARIANT_COUNT=$(grep -vc '^#' variants/SRR826444.vcf || true)\n\n        echo Variant count: ${VARIANT_COUNT} >> %s\n        echo Finished: yes >> %s\n    else\n        echo Status: not OK >> %s\n        echo Finished: no >> %s\n    fi\n\n    echo --- samtools flagstat --- >> %s\n    cat flagstat/SRR826444.flagstat.txt >> %s\n\n    echo RE_FLOW_RESULT_START\n    cat %s\n    echo RE_FLOW_RESULT_END\n" args [out[0], out[0], out[0], out[0], out[0], out[0], out[0], out[0], out[0], out[0]] resources {mem:7.0GiB cpu:4 disk:30.0GiB}
+2026/06/08 17:33:38 executor: alloc total{mem:7.4GiB cpu:4 disk:76.4GiB intel_avx:4 intel_avx2:4} used{} want{mem:7.4GiB cpu:4 disk:76.4GiB intel_avx:4 intel_avx2:4}
+2026/06/08 17:33:38 executor: 4764435d5c5b96c2: keepalive until 2026-06-08T17:35:38Z
+2026/06/08 17:33:38 scheduler: alloc 4764435d5c5b96c2 taskdballocid: <zero>
+2026/06/08 17:33:38 task bb3ffdbe (flow b3a27900) assigning to alloc 4764435d5c5b96c2 available {mem:376.1MiB cpu:0 disk:46.4GiB intel_avx:4 intel_avx2:4}
+2026/06/08 17:33:38 scheduler task bb3ffdbe (flow b3a27900): loading (try 0): started
+2026/06/08 17:33:38 scheduler task bb3ffdbe (flow b3a27900): loading (try 0): successful, next state: submitting
+2026/06/08 17:33:38 scheduler task bb3ffdbe (flow b3a27900): submitting (try 0): started
+2026/06/08 17:33:38 executor: 4764435d5c5b96c2: started exec bb3ffdbe using resources {mem:7.0GiB cpu:4 disk:30.0GiB} from total {mem:7.4GiB cpu:4 disk:76.4GiB intel_avx:4 intel_avx2:4}
+2026/06/08 17:33:38 scheduler task bb3ffdbe (flow b3a27900): submitting (try 0): successful, next state: waiting for completion
+2026/06/08 17:33:38 scheduler task bb3ffdbe (flow b3a27900): waiting for completion (try 0): started
+2026/06/08 17:33:38  ->  mapping_qc_embedded.Main b3a27900 exec   exec localhost:5000/bio-hw3-data:docker-v2 set -euo pipefail.mkdir -p qc..ort}}.echo RE_FLOW_RESULT_END
+2026/06/08 17:33:38 mapping_qc_embedded.Main b3a27900 /root/hw3-variant-calling/reflow/mapping_qc_embedded.rf:3:16:
+	resources: {mem:7.0GiB cpu:4 disk:30.0GiB}
+	sha256:44f057dd6d38abfe84655bc45c772de4a2635bf2e92b939112f8bb4468752d9f
+	sha256:b3a279008bf8d4483b42c3c1205a44c2566e3e41ce5c1765b2bc1c9c35524c30
+	4764435d5c5b96c2/bb3ffdbe5b899d31fde622db5812b4f2cfdbd2146a11cbd09e6690e449fc62ab
+	localhost:5000/bio-hw3-data:docker-v2
+	command:
+	    set -euo pipefail
+	    
+	    mkdir -p qc alignment flagstat variants ref
+	    
+	    cp /work/data/ref/ecoli.fa ref/ecoli.fa
+	    
+	    fastqc \
+	      /work/data/raw/SRR826444_1.fastq.gz \
+	      /work/data/raw/SRR826444_2.fastq.gz \
+	      -o qc
+	    
+	    bwa index ref/ecoli.fa
+	    samtools faidx ref/ecoli.fa
+	    
+	    bwa mem -t 4 \
+	      ref/ecoli.fa \
+	      /work/data/raw/SRR826444_1.fastq.gz \
+	      /work/data/raw/SRR826444_2.fastq.gz \
+	      | samtools view -@ 4 -bS - \
+	      > alignment/SRR826444.bam
+	    
+	    samtools flagstat alignment/SRR826444.bam > flagstat/SRR826444.flagstat.txt
+	    
+	    MAPPED_PERCENT=$(grep ' mapped (' flagstat/SRR826444.flagstat.txt | head -n 1 | cut -d '(' -f 2 | cut -d '%' -f 1)
+	    
+	    echo Sample: SRR826444 > {{report}}
+	    echo Mapped percent: ${MAPPED_PERCENT} >> {{report}}
+	    
+	    if awk -v p=${MAPPED_PERCENT} 'BEGIN {exit !(p > 90)}'; then
+	        echo Status: OK >> {{report}}
+	    
+	        samtools sort -@ 4 \
+	          -o alignment/SRR826444.sorted.bam \
+	          alignment/SRR826444.bam
+	    
+	        samtools index alignment/SRR826444.sorted.bam
+	    
+	        freebayes \
+	          -f ref/ecoli.fa \
+	          alignment/SRR826444.sorted.bam \
+	          > variants/SRR826444.vcf
+	    
+	        VARIANT_COUNT=$(grep -vc '^#' variants/SRR826444.vcf || true)
+	    
+	        echo Variant count: ${VARIANT_COUNT} >> {{report}}
+	        echo Finished: yes >> {{report}}
+	    else
+	        echo Status: not OK >> {{report}}
+	        echo Finished: no >> {{report}}
+	    fi
+	    
+	    echo --- samtools flagstat --- >> {{report}}
+	    cat flagstat/SRR826444.flagstat.txt >> {{report}}
+	    
+	    echo RE_FLOW_RESULT_START
+	    cat {{report}}
+	    echo RE_FLOW_RESULT_END
+	where:
+2026/06/08 17:34:11 executor: 4764435d5c5b96c2: sha256:bb3ffdbe5b899d31fde622db5812b4f2cfdbd2146a11cbd09e6690e449fc62ab: checking for Node OOM: (2026-06-08T17:33:38Z, 2026-06-08T17:34:11Z)
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): waiting for completion (try 0): successful, next state: promoting objects
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): promoting objects (try 0): started
+2026/06/08 17:34:11 executor: 4764435d5c5b96c2: completed exec bb3ffdbe using resources {mem:7.0GiB cpu:4 disk:30.0GiB} from total {mem:7.4GiB cpu:4 disk:76.4GiB intel_avx:4 intel_avx2:4}
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): promoting objects (try 0): successful, next state: retrieving diagnostic output
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): retrieving diagnostic output (try 0): started
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): retrieving inspect (and saving to repo nop:)
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): saved inspect to repo nop:: e3b0c442
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): retrieving diagnostic output (try 0): successful, next state: retrieving result
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): retrieving result (try 0): started
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): retrieving result (try 0): successful, next state: transferring output
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): transferring output (try 0): started
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): transferring output (try 0): successful, next state: unloading
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): unloading (try 0): started
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): unloading list<val<.=e16c190b 616B> 616B>
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): unloaded list<val<.=e16c190b 616B> 616B>
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): unloading (try 0): successful, next state: complete
+2026/06/08 17:34:11 scheduler task bb3ffdbe (flow b3a27900): returning task with state: done
+2026/06/08 17:34:11 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:34:11  <-  mapping_qc_embedded.Main b3a27900 ok     exec 32s 616B
+2026/06/08 17:34:11 scheduler: alloc 4764435d5c5b96c2 keepalive stopped (alloc.Context): context canceled
+2026/06/08 17:34:11 executor: killing alloc 4764435d5c5b96c2
+2026/06/08 17:34:11 reflow runtime: ===== shutdown =====
+/root/reflow-src/tool/main.go:374: runtime error: invalid memory address or nil pointer dereference

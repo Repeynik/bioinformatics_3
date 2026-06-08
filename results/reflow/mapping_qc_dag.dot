@@ -1,0 +1,36 @@
+digraph mapping_qc_pipeline {
+    rankdir=LR;
+
+    fastq [label="FASTQ paired-end\nSRR826444_1 / SRR826444_2"];
+    ref [label="Reference genome\necoli.fa"];
+
+    fastqc [label="FastQC"];
+    index [label="bwa index\nsamtools faidx"];
+    align [label="bwa mem"];
+    bam [label="samtools view\nSAM to BAM"];
+    flagstat [label="samtools flagstat"];
+    parse [label="Parse mapped percent"];
+    decision [label="mapped percent > 90%?"];
+    notok [label="Write not OK"];
+    sort [label="samtools sort"];
+    bamindex [label="samtools index"];
+    freebayes [label="freebayes"];
+    vcf [label="VCF output"];
+    finished [label="Finished"];
+
+    fastq -> fastqc;
+    ref -> index;
+    fastq -> align;
+    index -> align;
+    align -> bam;
+    bam -> flagstat;
+    flagstat -> parse;
+    parse -> decision;
+    decision -> notok [label="No"];
+    decision -> sort [label="Yes"];
+    sort -> bamindex;
+    bamindex -> freebayes;
+    index -> freebayes;
+    freebayes -> vcf;
+    vcf -> finished;
+}

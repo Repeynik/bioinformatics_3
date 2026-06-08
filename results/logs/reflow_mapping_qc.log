@@ -1,0 +1,95 @@
+2026/06/08 17:19:56 reflow version localcluster-localregistry-bypass (go1.22.2)
+2026/06/08 17:19:56 bootstrap binary: https://grail-public-bin.s3-us-west-2.amazonaws.com/linux/amd64/reflowbootstrap0.4
+2026/06/08 17:19:57 executor: no state on disk
+2026/06/08 17:19:57 reflow runtime: ===== started =====
+2026/06/08 17:19:57 scheduler: starting with configuration: transferer *repository.Manager cluster *localcluster.Cluster taskDB testutil.nopTaskDB blob.Mux[s3]
+2026/06/08 17:19:57 reflow version: localcluster-localregistry-bypass (go1.22.2)
+2026/06/08 17:19:57 run ID: be705e42
+2026/06/08 17:19:57 evaluating program /root/hw3-variant-calling/reflow/mapping_qc_pipeline.rf
+	params:
+		r1=/root/hw3-variant-calling/data/raw/SRR826444_1.fastq.gz
+		r2=/root/hw3-variant-calling/data/raw/SRR826444_2.fastq.gz
+		ref=/root/hw3-variant-calling/data/ref/ecoli.fa
+	arguments:
+	-ref
+	/root/hw3-variant-calling/data/ref/ecoli.fa
+	-r1
+	/root/hw3-variant-calling/data/raw/SRR826444_1.fastq.gz
+	-r2
+	/root/hw3-variant-calling/data/raw/SRR826444_2.fastq.gz
+2026/06/08 17:19:57 created bundle sha256:bbd0498e5e52f6bc5c7008b4d21589c35cd8954c00e0376d6ab6c1eac0ca0d53 with args: [-ref /root/hw3-variant-calling/data/ref/ecoli.fa -r1 /root/hw3-variant-calling/data/raw/SRR826444_1.fastq.gz -r2 /root/hw3-variant-calling/data/raw/SRR826444_2.fastq.gz]
+2026/06/08 17:19:57 Trace: none (since nopTracer is in use)
+2026/06/08 17:19:57 evaluating with configuration: scheduler *sched.Scheduler snapshotter blob.Mux repository *noprepo.Repository,url=nop: assoc &{{%!s(int32=0) %!s(uint32=0)} map[] %!s(func() time.Time=<nil>) %!s(func() []string=<nil>)} flags nocache,norecomputeempty,topdown flowconfig hashv2 cachelookuptimeout 20m0s imagemap map[] dotwriter(*os.File)
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 2
+2026/06/08 17:19:57 pending: tasks 1 (yet to submit), lookup 0, running 0
+2026/06/08 17:19:57 scheduler: task (flow 763c32cc) submitted with execconfig exec image localhost:5000/bio-hw3:docker-v2 cmd "\n        set -euo pipefail\n        mkdir -p %s\n        fastqc %s %s -o %s\n    " args [out[0], val<.= 11.9MiB>, val<.= 13.6MiB>, out[0]] resources {mem:2.0GiB cpu:2 disk:5.0GiB}
+2026/06/08 17:19:57 executor: alloc total{mem:7.4GiB cpu:4 disk:76.4GiB intel_avx:4 intel_avx2:4} used{} want{mem:2.0GiB cpu:2 disk:5.0GiB}
+2026/06/08 17:19:57 executor: 18b90d2a382de6b6: keepalive until 2026-06-08T17:21:57Z
+2026/06/08 17:19:57 scheduler: alloc 18b90d2a382de6b6 taskdballocid: <zero>
+2026/06/08 17:19:57 task 25f81cb9 (flow 763c32cc) assigning to alloc 18b90d2a382de6b6 available {}
+2026/06/08 17:19:57 scheduler task 25f81cb9 (flow 763c32cc): loading (try 0): started
+2026/06/08 17:19:57 scheduler task 25f81cb9 (flow 763c32cc): loading val<.= 13.6MiB>
+2026/06/08 17:19:57 scheduler task 25f81cb9 (flow 763c32cc): loading val<.= 11.9MiB>
+2026/06/08 17:19:57 scheduler task 25f81cb9 (flow 763c32cc): loading (try 0): non-retryable error: blob.Bucket : operation not supported: no implementation for scheme , next state: complete
+2026/06/08 17:19:57 scheduler task 25f81cb9 (flow 763c32cc): unloading val<>
+2026/06/08 17:19:57 scheduler task 25f81cb9 (flow 763c32cc): unloaded val<>
+2026/06/08 17:19:57 scheduler task 25f81cb9 (flow 763c32cc): returning task with state: done
+2026/06/08 17:19:57  ->  mapping_qc_pipeline.fastqcStep 763c32cc exec   exec localhost:5000/bio-hw3:docker-v2 set -euo pipefail.mkdir -p {{..stqc {{r1}} {{r2}} -o {{out}}
+2026/06/08 17:19:57 mapping_qc_pipeline.fastqcStep 763c32cc /root/hw3-variant-calling/reflow/mapping_qc_pipeline.rf:10:9:
+	resources: {mem:2.0GiB cpu:2 disk:5.0GiB}
+	sha256:be962c5251940cfe5e54e2a9498d4da8bfddcae0744bcc7589f39a7d627be028
+	sha256:763c32cc393423f414f3868bf73ee76fdf7e3733da8c2b8d6353f2895dfc2c43
+	localhost:5000/bio-hw3:docker-v2
+	command:
+	    set -euo pipefail
+	    mkdir -p {{out}}
+	    fastqc {{r1}} {{r2}} -o {{out}}
+	where:
+	    {{r1}} = 
+	        . <zero> 11.9MiB
+	    {{r2}} = 
+	        . <zero> 13.6MiB
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57  <-  mapping_qc_pipeline.fastqcStep 763c32cc err    exec 0s ?
+	error blob.Bucket : operation not supported: no implementation for scheme 
+	/root/hw3-variant-calling/reflow/mapping_qc_pipeline.rf:10:9
+	localhost:5000/bio-hw3:docker-v2
+	command:
+	    set -euo pipefail
+	    mkdir -p {{out}}
+	    fastqc {{r1}} {{r2}} -o {{out}}
+	where:
+	    {{r1}} = 
+	        . <zero> 11.9MiB
+	    {{r2}} = 
+	        . <zero> 13.6MiB
+	profile:
+	    cpu mean=0.0 max=0.0 (N=0, duration=0s)
+	    mem mean=0B max=0B (N=0, duration=0s)
+	    disk mean=0B max=0B (N=0, duration=0s)
+	    tmp mean=0B max=0B (N=0, duration=0s)
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:19:57 total n=1 time=0s
+	ident                          n   ncache runtime(m) cpu mem(GiB) disk(GiB) tmp(GiB) requested
+	mapping_qc_pipeline.fastqcStep 1   0                                        
+	
+2026/06/08 17:19:57 marking run done after nonrecoverable error blob.Bucket : operation not supported: no implementation for scheme 
+2026/06/08 17:19:57 blob.Bucket : operation not supported: no implementation for scheme 
+2026/06/08 17:19:57 waiting for 1 background tasks to complete
+2026/06/08 17:19:57 Saved all logs for run be705e42 in task db 

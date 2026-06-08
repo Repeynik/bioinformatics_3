@@ -1,0 +1,59 @@
+2026/06/08 17:17:29 reflow version localcluster-localregistry-bypass (go1.22.2)
+2026/06/08 17:17:29 bootstrap binary: https://grail-public-bin.s3-us-west-2.amazonaws.com/linux/amd64/reflowbootstrap0.4
+2026/06/08 17:17:29 executor: no state on disk
+2026/06/08 17:17:29 reflow runtime: ===== started =====
+2026/06/08 17:17:29 scheduler: starting with configuration: transferer *repository.Manager cluster *localcluster.Cluster taskDB testutil.nopTaskDB blob.Mux[s3]
+2026/06/08 17:17:29 reflow version: localcluster-localregistry-bypass (go1.22.2)
+2026/06/08 17:17:29 run ID: 5eb84883
+2026/06/08 17:17:29 evaluating program /root/hw3-variant-calling/reflow/hello.rf
+	(no params)
+	(no arguments)
+2026/06/08 17:17:29 Trace: none (since nopTracer is in use)
+2026/06/08 17:17:29 evaluating with configuration: scheduler *sched.Scheduler snapshotter blob.Mux repository *noprepo.Repository,url=nop: assoc &{{%!s(int32=0) %!s(uint32=0)} map[] %!s(func() time.Time=<nil>) %!s(func() []string=<nil>)} flags nocache,norecomputeempty,topdown flowconfig hashv2 cachelookuptimeout 20m0s imagemap map[localhost:5000/bio-hw3:docker-v2:localhost:5000/bio-hw3:docker-v2] dotwriter(*os.File)
+2026/06/08 17:17:29 pending: tasks 1 (yet to submit), lookup 0, running 0
+2026/06/08 17:17:29 scheduler: task (flow 6094e469) submitted with execconfig exec image localhost:5000/bio-hw3:docker-v2 cmd "\n    echo hello world > %s\n" args [out[0]] resources {mem:1.0GiB cpu:1 disk:0B}
+2026/06/08 17:17:29 created bundle sha256:e8ad8c858aa0feb10275ddc9db161eba4842fddbf93d75311164b3834102f682 with args: []
+2026/06/08 17:17:29 executor: alloc total{mem:7.4GiB cpu:4 disk:76.4GiB intel_avx:4 intel_avx2:4} used{} want{mem:1.0GiB cpu:1 disk:1.0GiB}
+2026/06/08 17:17:29 executor: 577e56858df419e4: keepalive until 2026-06-08T17:19:29Z
+2026/06/08 17:17:29 scheduler: alloc 577e56858df419e4 taskdballocid: <zero>
+2026/06/08 17:17:29 task 393ea2b8 (flow 6094e469) assigning to alloc 577e56858df419e4 available {mem:0B cpu:0 disk:1.0GiB}
+2026/06/08 17:17:29 scheduler task 393ea2b8 (flow 6094e469): loading (try 0): started
+2026/06/08 17:17:29 scheduler task 393ea2b8 (flow 6094e469): loading (try 0): successful, next state: submitting
+2026/06/08 17:17:29 scheduler task 393ea2b8 (flow 6094e469): submitting (try 0): started
+2026/06/08 17:17:29 executor: 577e56858df419e4: started exec 393ea2b8 using resources {mem:1.0GiB cpu:1 disk:0B} from total {mem:1.0GiB cpu:1 disk:1.0GiB}
+2026/06/08 17:17:29 scheduler task 393ea2b8 (flow 6094e469): submitting (try 0): successful, next state: waiting for completion
+2026/06/08 17:17:29 scheduler task 393ea2b8 (flow 6094e469): waiting for completion (try 0): started
+2026/06/08 17:17:29  ->  hello.Main   6094e469 exec   exec localhost:5000/bio-hw3:docker-v2 echo hello world > {{out}}
+2026/06/08 17:17:29 hello.Main 6094e469 /root/hw3-variant-calling/reflow/hello.rf:1:16:
+	resources: {mem:1.0GiB cpu:1 disk:0B}
+	sha256:80ae7ce9e09920eaa7861dd3abe63f160ce781e37c4617c633dc34f6021b4d79
+	sha256:6094e469b29e667973a5c355c5e6da2b76b95c6d3de546af6b10d6961a63a11f
+	577e56858df419e4/393ea2b8bb7fc02b065154326661af9872a46725176416630d36343c4798021b
+	localhost:5000/bio-hw3:docker-v2
+	command:
+	    echo hello world > {{out}}
+	where:
+2026/06/08 17:17:30 executor: 577e56858df419e4: sha256:393ea2b8bb7fc02b065154326661af9872a46725176416630d36343c4798021b: checking for Node OOM: (2026-06-08T17:17:29Z, 2026-06-08T17:17:30Z)
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): waiting for completion (try 0): successful, next state: promoting objects
+2026/06/08 17:17:30 executor: 577e56858df419e4: completed exec 393ea2b8 using resources {mem:1.0GiB cpu:1 disk:0B} from total {mem:1.0GiB cpu:1 disk:1.0GiB}
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): promoting objects (try 0): started
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): promoting objects (try 0): successful, next state: retrieving diagnostic output
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): retrieving diagnostic output (try 0): started
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): retrieving inspect (and saving to repo nop:)
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): saved inspect to repo nop:: e3b0c442
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): retrieving diagnostic output (try 0): successful, next state: retrieving result
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): retrieving result (try 0): started
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): retrieving result (try 0): successful, next state: transferring output
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): transferring output (try 0): started
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): transferring output (try 0): successful, next state: unloading
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): unloading (try 0): started
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): unloading list<val<.=a948904f 12B> 12B>
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): unloaded list<val<.=a948904f 12B> 12B>
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): unloading (try 0): successful, next state: complete
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): returning task with state: done
+2026/06/08 17:17:30 pending: tasks 0 (yet to submit), lookup 0, running 1
+2026/06/08 17:17:30  <-  hello.Main   6094e469 ok     exec 0s 12B
+2026/06/08 17:17:30 scheduler: alloc 577e56858df419e4 keepalive stopped (alloc.Context): context canceled
+2026/06/08 17:17:30 executor: killing alloc 577e56858df419e4
+2026/06/08 17:17:30 reflow runtime: ===== shutdown =====
+/root/reflow-src/tool/main.go:374: runtime error: invalid memory address or nil pointer dereference

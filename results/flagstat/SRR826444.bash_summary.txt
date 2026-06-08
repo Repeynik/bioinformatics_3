@@ -1,0 +1,7 @@
+Sample: SRR826444
+Mapped percent: 96.80
+Status: OK
+Threshold: 90
+VCF: results/variants/SRR826444.vcf
+VCF size: 3.2M
+Variant records: 7906

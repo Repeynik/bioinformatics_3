@@ -1,0 +1,13 @@
+[1/8] FastQC
+application/gzip
+application/gzip
+Analysis complete for SRR826444_1.fastq.gz
+Analysis complete for SRR826444_2.fastq.gz
+[2/8] Index reference with BWA
+[3/8] Index reference with samtools faidx
+[4/8] Align reads with bwa mem
+[5/8] Convert SAM to BAM
+[6/8] Run samtools flagstat
+[7/8] Check mapping quality
+Mapping quality: OK (96.80%)
+[8/8] Sort BAM and call variants

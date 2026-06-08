@@ -1,0 +1,22 @@
+Sample: SRR826444
+Mapped percent: 96.80
+Status: OK
+Variant count: 7906
+Finished: yes
+--- samtools flagstat ---
+297200 + 0 in total (QC-passed reads + QC-failed reads)
+296036 + 0 primary
+0 + 0 secondary
+1164 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+287686 + 0 mapped (96.80% : N/A)
+286522 + 0 primary mapped (96.79% : N/A)
+296036 + 0 paired in sequencing
+148018 + 0 read1
+148018 + 0 read2
+275612 + 0 properly paired (93.10% : N/A)
+281576 + 0 with itself and mate mapped
+4946 + 0 singletons (1.67% : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)

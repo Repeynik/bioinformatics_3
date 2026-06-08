@@ -1,0 +1,7 @@
+2026/06/08 16:24:24 reflow version localcluster-noaws4-docker144 (go1.22.2)
+2026/06/08 16:24:24 bootstrap binary: https://grail-public-bin.s3-us-west-2.amazonaws.com/linux/amd64/reflowbootstrap0.4
+2026/06/08 16:24:24 executor: no state on disk
+2026/06/08 16:24:24 reflow runtime: ===== started =====
+2026/06/08 16:24:24 scheduler: starting with configuration: transferer *repository.Manager cluster *localcluster.Cluster taskDB testutil.nopTaskDB blob.Mux[s3]
+2026/06/08 16:24:24 reflow runtime: ===== shutdown =====
+/root/reflow-src/tool/main.go:374: panic: reflect.Set: value of type *localcluster.Cluster is not assignable to type *ec2cluster.Cluster

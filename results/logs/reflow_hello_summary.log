@@ -1,0 +1,7 @@
+2026/06/08 17:17:29 reflow runtime: ===== started =====
+2026/06/08 17:17:29 run ID: 5eb84883
+2026/06/08 17:17:29 scheduler: task (flow 6094e469) submitted with execconfig exec image localhost:5000/bio-hw3:docker-v2 cmd "\n    echo hello world > %s\n" args [out[0]] resources {mem:1.0GiB cpu:1 disk:0B}
+2026/06/08 17:17:30 executor: 577e56858df419e4: completed exec 393ea2b8 using resources {mem:1.0GiB cpu:1 disk:0B} from total {mem:1.0GiB cpu:1 disk:1.0GiB}
+2026/06/08 17:17:30 scheduler task 393ea2b8 (flow 6094e469): returning task with state: done
+2026/06/08 17:17:30  <-  hello.Main   6094e469 ok     exec 0s 12B
+2026/06/08 17:17:30 reflow runtime: ===== shutdown =====
